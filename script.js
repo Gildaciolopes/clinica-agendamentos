@@ -1,3 +1,4 @@
+// Seleciona o formulário e a tabela
 const form = document.getElementById("form-agendamento");
 const listaConsultas = document.getElementById("lista-consultas");
 
@@ -32,8 +33,10 @@ form.addEventListener("submit", function (event) {
   agendamentos.push(novaConsulta);
   localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
 
+  // Atualiza a lista
   adicionarConsultaNaTabela(novaConsulta);
 
+  // Limpa o formulário
   form.reset();
 });
 
@@ -48,13 +51,45 @@ function adicionarConsultaNaTabela(consulta) {
     <td>${consulta.especialidade}</td>
     <td>${consulta.data}</td>
     <td>${consulta.hora}</td>
+    <td><button class="excluir-btn">Excluir</button></td>
   `;
+
+  // Adiciona o evento de exclusão no botão
+  linha.querySelector(".excluir-btn").addEventListener("click", function () {
+    excluirConsulta(consulta);
+  });
 
   listaConsultas.appendChild(linha);
 }
 
+// Função para excluir consulta
+function excluirConsulta(consulta) {
+  // Carrega os agendamentos
+  const agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+  // Filtra o agendamento para remover o selecionado
+  const agendamentosAtualizados = agendamentos.filter((item) => {
+    return (
+      item.nome !== consulta.nome ||
+      item.email !== consulta.email ||
+      item.telefone !== consulta.telefone ||
+      item.especialidade !== consulta.especialidade ||
+      item.data !== consulta.data ||
+      item.hora !== consulta.hora
+    );
+  });
+
+  // Atualiza o localStorage
+  localStorage.setItem("agendamentos", JSON.stringify(agendamentosAtualizados));
+
+  // Recarrega a lista na tela
+  carregarAgendamentos();
+}
+
 // Função para carregar agendamentos salvos
 function carregarAgendamentos() {
+  listaConsultas.innerHTML = ""; // Limpa a tabela atual
+
   const agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
 
   agendamentos.forEach((consulta) => {
