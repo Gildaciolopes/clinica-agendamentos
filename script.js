@@ -26,6 +26,11 @@ form.addEventListener("submit", function (event) {
     return;
   }
 
+  // Validação de e-mail e telefone
+  if (!validarContato(email, telefone)) {
+    return;
+  }
+
   // Verificação de validade da data
   if (!isDataValida(data)) {
     alert(
