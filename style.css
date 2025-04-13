@@ -103,3 +103,26 @@ tbody tr:hover {
     flex-direction: column;
   }
 }
+/* Estilos para o botão de exclusão */
+.excluir-btn {
+  background-color: #e74c3c; /* Cor vermelha */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efeito de hover no botão */
+.excluir-btn:hover {
+  background-color: #c0392b; /* Cor vermelha mais escura */
+  transform: scale(1.05); /* Leve aumento de tamanho */
+}
+
+/* Efeito de foco no botão */
+.excluir-btn:focus {
+  outline: none; /* Remove a borda padrão de foco */
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.5); /* Sombra leve ao focar */
+}
