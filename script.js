@@ -26,6 +26,22 @@ form.addEventListener("submit", function (event) {
     return;
   }
 
+  // Verificação de validade da data
+  if (!isDataValida(data)) {
+    alert(
+      "A data selecionada não é válida. Por favor, insira uma data válida."
+    );
+    return;
+  }
+
+  // Verificação de validade do horário comercial
+  if (!isHorarioValido(hora)) {
+    alert(
+      "O horário informado está fora do horário comercial (08:00 - 18:00)."
+    );
+    return;
+  }
+
   // Verificação de conflito de horário
   if (verificarConflitoDeHorario(data, hora)) {
     alert("Este horário já está agendado. Por favor, escolha outro.");
@@ -45,6 +61,37 @@ form.addEventListener("submit", function (event) {
   // Limpa o formulário
   form.reset();
 });
+
+// Função para verificar se a data é válida
+function isDataValida(data) {
+  const dataSelecionada = new Date(data);
+  const hoje = new Date();
+
+  // A data não pode ser no passado
+  if (dataSelecionada < hoje.setHours(0, 0, 0, 0)) {
+    return false;
+  }
+
+  return true;
+}
+
+// Função para verificar se o horário está dentro do horário comercial
+function isHorarioValido(hora) {
+  const [horaParte, minutoParte] = hora.split(":");
+  const horaSelecionada = parseInt(horaParte);
+  const minutoSelecionado = parseInt(minutoParte);
+
+  // Horário comercial é entre 08:00 e 18:00
+  if (
+    horaSelecionada < 8 ||
+    (horaSelecionada === 18 && minutoSelecionado > 0) ||
+    horaSelecionada > 18
+  ) {
+    return false;
+  }
+
+  return true;
+}
 
 // Função para adicionar a consulta na tabela
 function adicionarConsultaNaTabela(consulta) {
