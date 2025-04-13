@@ -47,3 +47,11 @@ function adicionarConsultaNaTabela(consulta) {
 
   listaConsultas.appendChild(linha);
 }
+
+function carregarAgendamentos() {
+  const agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+  agendamentos.forEach((consulta) => {
+    adicionarConsultaNaTabela(consulta);
+  });
+}
