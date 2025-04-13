@@ -26,6 +26,12 @@ form.addEventListener("submit", function (event) {
     return;
   }
 
+  // Verificação de conflito de horário
+  if (verificarConflitoDeHorario(data, hora)) {
+    alert("Este horário já está agendado. Por favor, escolha outro.");
+    return;
+  }
+
   const novaConsulta = { nome, email, telefone, especialidade, data, hora };
 
   // Salva no localStorage
@@ -95,6 +101,20 @@ function carregarAgendamentos() {
   agendamentos.forEach((consulta) => {
     adicionarConsultaNaTabela(consulta);
   });
+}
+
+// Função para verificar se já existe agendamento no mesmo horário
+function verificarConflitoDeHorario(data, hora) {
+  const agendamentos = JSON.parse(localStorage.getItem("agendamentos")) || [];
+
+  // Verifica se já existe um agendamento para a mesma data e hora
+  for (let consulta of agendamentos) {
+    if (consulta.data === data && consulta.hora === hora) {
+      return true; // Conflito encontrado
+    }
+  }
+
+  return false; // Nenhum conflito encontrado
 }
 
 // Função para aplicar filtros por data e especialidade
