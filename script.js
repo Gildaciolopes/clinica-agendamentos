@@ -32,3 +32,18 @@ form.addEventListener("submit", function (event) {
 
   form.reset();
 });
+
+function adicionarConsultaNaTabela(consulta) {
+  const linha = document.createElement("tr");
+
+  linha.innerHTML = `
+      <td>${consulta.nome}</td>
+      <td>${consulta.email}</td>
+      <td>${consulta.telefone}</td>
+      <td>${consulta.especialidade}</td>
+      <td>${consulta.data}</td>
+      <td>${consulta.hora}</td>
+    `;
+
+  listaConsultas.appendChild(linha);
+}
